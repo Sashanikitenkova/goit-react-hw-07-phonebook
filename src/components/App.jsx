@@ -1,38 +1,14 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { addContact } from "redux/contactSlice";
-// import { nanoid } from "nanoid";
 import { ContactForm } from "./ContactForm/ContactForm";
 import Filter from "./Filter/Filter";
 import ContactList from "./ContactList/ContactList";
 
 export function App() {
-  const contacts = useSelector(state => state.contacts.contacts);
-  const dispatch = useDispatch();
-
-  const formSubmit  = ({name, number}) => {
-        const findName = contacts.find(contact => 
-          contact.name.toLowerCase() === name.toLowerCase()
-        );
-        if (findName) {
-          return alert(`${name} is already in contacts.`);
-        };
-    
-        const findNumber = contacts.find(contact => 
-          contact.number === number
-        );
-        if (findNumber) {
-          return alert(`This phone number is already in use.`);
-        };
-    
-        dispatch(addContact({name, number})); 
-      }
-
+  
     return (
         <div>
 
         <h1>Phonebook</h1>
-         <ContactForm onSubmit={formSubmit} />
+         <ContactForm />
 
          <h2>Contacts</h2>
 

@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { filterContact } from 'redux/contactSlice';
 import s from './Filter.module.css';
 
-const Filter = ({ filter, onChange}) => {
+const Filter = () => {
     const dispatch = useDispatch();
     const onChangeFilter = e => {
         dispatch(filterContact(e.target.value));
@@ -14,7 +14,6 @@ const Filter = ({ filter, onChange}) => {
             <input
                     type="text"
                     name="filter"
-                    value={filter}
                     onChange={onChangeFilter}
                     className={s.input}
             />

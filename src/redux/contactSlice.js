@@ -26,7 +26,6 @@ import { nanoid } from "nanoid";
       filterContact(state, action) {
         console.log(action);
         state.filter = action.payload;
-        state.contacts = state.contacts.filter(constant => constant.name.toLowerCase().includes(state.filter.toLowerCase()));
       },
       
       
