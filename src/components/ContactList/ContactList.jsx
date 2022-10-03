@@ -10,12 +10,12 @@ const ContactList = () => {
 
     return (
       <ul className={s.contactList}>
-           {contacts.map(({id, name, number}) => (
+           {contacts.map(({id, name, phone}) => (
                 <ContactItem 
                     key={id} 
                     id={id}
                     name={name}
-                    number={number}
+                    number={phone}
                 />
         ))}
       </ul> 
@@ -39,22 +39,26 @@ ContactList.propTypes = {
 
 
 // import PropTypes from 'prop-types';
+// import { useSelector } from 'react-redux';
+// import { getFilteredContacts } from 'redux/selector';
 // import ContactItem from 'components/ContactItem/ContactItem';
 // import s from './ContactList.module.css'
 
-// const ContactList = ({contacts, onClick}) => {
+// const ContactList = () => {
+//     // const contacts = useSelector(state => state.contacts.contacts);
+//     const contacts = useSelector(getFilteredContacts);
+
 //     return (
-//         <ul className={s.contactList}>
-//             {contacts.map(({id, name, number}) => (
+//       <ul className={s.contactList}>
+//            {contacts.map(({id, name, number}) => (
 //                 <ContactItem 
 //                     key={id} 
 //                     id={id}
 //                     name={name}
 //                     number={number}
-//                     onClick={onClick}
 //                 />
 //         ))}
-//      </ul>
+//       </ul> 
 //     )
 // } 
 
@@ -68,5 +72,7 @@ ContactList.propTypes = {
 //           number: PropTypes.string.isRequired,
 //         })
 //       ), 
-//     onClick: PropTypes.func.isRequired,
 // };
+
+
+

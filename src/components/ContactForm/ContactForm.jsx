@@ -7,15 +7,15 @@ import s from './ContactForm.module.css';
 
 export function ContactForm() {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setNumber] = useState('');
  
   const nameInputId = nanoid();
-  const numberInputId = nanoid();
+  const phoneInputId = nanoid();
 
   const contacts = useSelector(state => state.contacts.contacts);
   const dispatch = useDispatch();
 
-  const formSubmit  = ({name, number}) => {
+  const formSubmit  = ({name, phone}) => {
         const findName = contacts.find(contact => 
           contact.name.toLowerCase() === name.toLowerCase()
         );
@@ -24,13 +24,13 @@ export function ContactForm() {
         };
     
         const findNumber = contacts.find(contact => 
-          contact.number === number
+          contact.phone === phone
         );
         if (findNumber) {
           return alert(`This phone number is already in use.`);
         };
     
-        dispatch(addContact({name, number})); 
+        dispatch(addContact({name, phone})); 
       }
 
   const handleChange = e => {
@@ -41,7 +41,7 @@ export function ContactForm() {
           setName(value);
           break;
   
-        case 'number':
+        case 'phone':
           setNumber(value);
           break;
   
@@ -52,7 +52,7 @@ export function ContactForm() {
 
   const handleSubmit = e => {
       e.preventDefault();
-      formSubmit({ name: name, number: number });
+      formSubmit({ name: name, phone: phone });
       reset();
   };
 
@@ -76,15 +76,15 @@ export function ContactForm() {
               className={s.input}
           />
 
-          <label htmlFor={numberInputId} className={s.label}>Number</label>
+          <label htmlFor={phoneInputId} className={s.label}>Number</label>
           <input
               type="tel"
-              name="number"
+              name="phone"
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
-              value={number}
-              id = {numberInputId}
+              value={phone}
+              id = {phoneInputId}
               onChange={handleChange}
               className={s.input}
           />
@@ -100,73 +100,97 @@ export function ContactForm() {
 
 
 // import React, {useState} from "react";
+// import { useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
+// import { addContact } from "redux/contactSlice";
 // import { nanoid } from "nanoid";
-// import s from './ContactForm.module.css'
+// import s from './ContactForm.module.css';
 
-// export function ContactForm({ onSubmit }) {
-//     const [name, setName] = useState('');
-//     const [number, setNumber] = useState('');
-   
-//     const nameInputId = nanoid();
-//     const numberInputId = nanoid();
+// export function ContactForm() {
+//   const [name, setName] = useState('');
+//   const [number, setNumber] = useState('');
+ 
+//   const nameInputId = nanoid();
+//   const numberInputId = nanoid();
 
-//     const handleChange = e => {
-//         const { name, value } = e.currentTarget;
+//   const contacts = useSelector(state => state.contacts.contacts);
+//   const dispatch = useDispatch();
 
-//         switch (name) {
-//           case 'name':
-//             setName(value);
-//             break;
+//   const formSubmit  = ({name, number}) => {
+//         const findName = contacts.find(contact => 
+//           contact.name.toLowerCase() === name.toLowerCase()
+//         );
+//         if (findName) {
+//           return alert(`${name} is already in contacts.`);
+//         };
     
-//           case 'number':
-//             setNumber(value);
-//             break;
+//         const findNumber = contacts.find(contact => 
+//           contact.number === number
+//         );
+//         if (findNumber) {
+//           return alert(`This phone number is already in use.`);
+//         };
     
-//           default:
-//             break;
-//         }
-//     };
+//         dispatch(addContact({name, number})); 
+//       }
 
-//     const handleSubmit = e => {
-//         e.preventDefault();
-//         onSubmit({ name: name, number: number });
-//         reset();
-//     };
+//   const handleChange = e => {
+//       const { name, value } = e.currentTarget;
 
-//     const reset = () => {
-//         setName('');
-//         setNumber('');
-//     };
+//       switch (name) {
+//         case 'name':
+//           setName(value);
+//           break;
+  
+//         case 'number':
+//           setNumber(value);
+//           break;
+  
+//         default:
+//           break;
+//       }
+//   };
 
-//       return (
-//         <form onSubmit={handleSubmit} className={s.form}>
-//             <label htmlFor={nameInputId} className={s.label}>Name</label>
-//             <input
-//                 type="text"
-//                 name="name"
-//                 pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-//                 title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-//                 required
-//                 value={name}
-//                 id = {nameInputId}
-//                 onChange={handleChange}
-//                 className={s.input}
-//             />
+//   const handleSubmit = e => {
+//       e.preventDefault();
+//       formSubmit({ name: name, number: number });
+//       reset();
+//   };
 
-//             <label htmlFor={numberInputId} className={s.label}>Number</label>
-//             <input
-//                 type="tel"
-//                 name="number"
-//                 pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-//                 title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-//                 required
-//                 value={number}
-//                 id = {numberInputId}
-//                 onChange={handleChange}
-//                 className={s.input}
-//             />
-//             <button type="submit" className={s.button}>Add contact</button>
-//        </form>
-//       );
-//   }
+//   const reset = () => {
+//       setName('');
+//       setNumber('');
+//   };
+
+//     return (
+//       <form onSubmit={handleSubmit} className={s.form}>
+//           <label htmlFor={nameInputId} className={s.label}>Name</label>
+//           <input
+//               type="text"
+//               name="name"
+//               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+//               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+//               required
+//               value={name}
+//               id = {nameInputId}
+//               onChange={handleChange}
+//               className={s.input}
+//           />
+
+//           <label htmlFor={numberInputId} className={s.label}>Number</label>
+//           <input
+//               type="tel"
+//               name="number"
+//               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+//               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+//               required
+//               value={number}
+//               id = {numberInputId}
+//               onChange={handleChange}
+//               className={s.input}
+//           />
+//           <button type="submit" className={s.button}>Add contact</button>
+//      </form>
+//     );
+// }
 

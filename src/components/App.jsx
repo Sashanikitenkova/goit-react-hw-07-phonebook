@@ -1,8 +1,18 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchContacts } from "redux/contactSlice";
 import { ContactForm } from "./ContactForm/ContactForm";
 import Filter from "./Filter/Filter";
 import ContactList from "./ContactList/ContactList";
 
 export function App() {
+
+    const { isLoadig, error } = useSelector(state => state.contacts);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchContacts());
+    }, [dispatch]);
   
     return (
         <div>
@@ -14,6 +24,9 @@ export function App() {
 
          <Filter />
 
+         {isLoadig === true && <h2>Loading...</h2>}
+         {error && <h2>An error occured: {error}</h2>}
+
         <ContactList /> 
 
         </div>
@@ -22,86 +35,28 @@ export function App() {
 
 
 
-
-
-
-
-// import React, {useState, useEffect} from "react";
 // import { ContactForm } from "./ContactForm/ContactForm";
-// import { nanoid } from "nanoid";
-// import ContactList from "./ContactList/ContactList";
 // import Filter from "./Filter/Filter";
-
+// import ContactList from "./ContactList/ContactList";
 
 // export function App() {
-//   const [contacts, setContacts] = useState([]);
-//   const [filter, setFilter] = useState('');
-
-//   useEffect(() => {
-//     const constant = localStorage.getItem('contacts');
-//     const parsedConstant = JSON.parse(constant);
-
-//     if(parsedConstant) {
-//       setContacts(parsedConstant);
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//       localStorage.setItem('contacts', JSON.stringify(contacts));
-//   }, [contacts]);
-
-//   const formSubmit  = ({name, number}) => {
-//     const findName = contacts.find(contact => 
-//       contact.name.toLowerCase() === name.toLowerCase()
-//     );
-//     if (findName) {
-//       return alert(`${name} is already in contacts.`);
-//     };
-
-//     const findNumber = contacts.find(contact => 
-//       contact.number === number
-//     );
-//     if (findNumber) {
-//       return alert(`This phone number is already in use.`);
-//     };
-
-//     setContacts(contacts => [...contacts, { id: nanoid(), name, number }]);
-//   }
-
-//   const deleteContact = contactId => {
-//     setContacts(contacts => 
-//       contacts.filter(contact => contact.id !== contactId));
-//   };
-
-//   const changeFilter = e => {
-//     setFilter(e.currentTarget.value);
-//   };
-
-//   const filterContacts = () => {
-//     return contacts.filter(constant =>
-//       constant.name.toLowerCase().includes(filter.toLowerCase()));
-//   };
-
+  
 //     return (
 //         <div>
-//           <h1>Phonebook</h1>
-//           <ContactForm onSubmit={formSubmit}/>
-          
-//           <h2>Contacts</h2>
 
-//           <Filter 
-//              filter={filter}
-//              onChange={changeFilter}
-//           />
+//         <h1>Phonebook</h1>
+//          <ContactForm />
 
-//           <ContactList 
-//              contacts={filterContacts()}
-//              onClick={deleteContact}
-//           />
-           
+//          <h2>Contacts</h2>
+
+//          <Filter />
+
+//         <ContactList /> 
+
 //         </div>
 //     );
 // };
+
 
 
 

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import s from './ContactItem.module.css';
 import { useDispatch } from "react-redux";
-import { removeContact } from "redux/contactSlice";
+import { deleteContact } from "redux/contactSlice";
 
 const ContactItem = ({ id, name, number }) => {
     const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const ContactItem = ({ id, name, number }) => {
 
             <li className={s.contactItem}>
                 {name}: {number}
-                <button type='button' className={s.button} onClick={() => dispatch(removeContact({id}))}>Delete</button>
+                <button type='button' className={s.button} onClick={() => dispatch(deleteContact(id))}>Delete</button>
            </li>
         )
 } 
@@ -29,14 +29,19 @@ ContactItem.propTypes = {
 
 
 // import PropTypes from 'prop-types';
-// import s from './ContactItem.module.css'
+// import s from './ContactItem.module.css';
+// import { useDispatch } from "react-redux";
+// import { removeContact } from "redux/contactSlice";
 
-// const ContactItem = ({id, name, number, onClick}) => {
+// const ContactItem = ({ id, name, number }) => {
+//     const dispatch = useDispatch();
+
 //     return (
-//             <li className={s.contactItem} key={id}>
+
+//             <li className={s.contactItem}>
 //                 {name}: {number}
-//                 <button type='button' className={s.button} onClick={() => onClick(id)}>Delete</button>
-//             </li>
+//                 <button type='button' className={s.button} onClick={() => dispatch(removeContact({id}))}>Delete</button>
+//            </li>
 //         )
 // } 
 
@@ -46,5 +51,4 @@ ContactItem.propTypes = {
 //     id: PropTypes.string.isRequired,
 //     name: PropTypes.string.isRequired,
 //     number: PropTypes.string.isRequired,
-//     onClick: PropTypes.func.isRequired,
 // };
