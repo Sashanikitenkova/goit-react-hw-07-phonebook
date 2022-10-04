@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { nanoid } from "nanoid";
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
@@ -19,36 +18,35 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
-// export const addContacts = createAsyncThunk(
-//   'contacts/addContacts',
-//   async function({name, phone}, {rejectWithValue, dispatch}) {
-//     try {
-//       const contact = {
-//         createdAt: "2022-10-02T12:52:04.085Z",
-//         name: name, 
-//         phone: phone,
-//         id: nanoid(),
-//       }
-//       const response = await fetch(`https://6339f23c471b8c3955687d6a.mockapi.io/contacts`, {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(contact)
-//       });
+export const addContacts = createAsyncThunk(
+  'contacts/addContacts',
+  async function({name, phone}, {rejectWithValue, dispatch}) {
+    try {
+      const contact = {
+        name: name, 
+        phone: phone,
+      };
+      const response = await fetch(`https://6339f23c471b8c3955687d6a.mockapi.io/contacts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contact)
+      });
 
-//       if(!response.ok){
-//         throw new Error('Can\'t add task. Server error.');
-//       }
+      if(!response.ok){
+        throw new Error('Can\'t add task. Server error.');
+      }
       
-//       const data = await response.json();
-//       console.log(data);
+      const data = await response.json();
+      console.log(data);
+      dispatch(addContact(data));
 
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
@@ -87,13 +85,7 @@ const setError = (state, action) => {
 
     reducers: {
       addContact(state, action) {
-        console.log(action);
-
-        state.contacts.push({ 
-            id: nanoid(),
-            name: action.payload.name, 
-            phone: action.payload.phone,
-          })
+        state.contacts.push(action.payload);
       },
       removeContact(state, action) {
         state.contacts = state.contacts.filter(contact => contact.id !== action.payload.id);
@@ -126,40 +118,3 @@ const setError = (state, action) => {
 
 
 
-// import { createSlice } from '@reduxjs/toolkit';
-// import { nanoid } from "nanoid";
-
-//   export const contactSlice = createSlice({
-//     name: 'contacts',
-
-//     initialState: {
-//       contacts: [],
-//       filter: '',
-//     },
-
-//     reducers: {
-//       addContact(state, action) {
-//         console.log(action);
-
-//         state.contacts.push({ 
-//             id: nanoid(),
-//             name: action.payload.name, 
-//             number: action.payload.number,
-//           })
-//       },
-//       removeContact(state, action) {
-//         state.contacts = state.contacts.filter(contact => contact.id !== action.payload.id);
-
-//       },
-//       filterContact(state, action) {
-//         console.log(action);
-//         state.filter = action.payload;
-//       },
-      
-      
-//     },
-//   });
-  
-//   export const { addContact, removeContact, filterContact } = contactSlice.actions;
-  
-//   export default contactSlice.reducer;

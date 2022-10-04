@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addContact } from "redux/contactSlice";
+import { addContacts } from "redux/contactSlice";
 import { nanoid } from "nanoid";
 import s from './ContactForm.module.css';
 
@@ -30,7 +30,7 @@ export function ContactForm() {
           return alert(`This phone number is already in use.`);
         };
     
-        dispatch(addContact({name, phone})); 
+        dispatch(addContacts({name, phone})); 
       }
 
   const handleChange = e => {
